@@ -1,0 +1,6 @@
+{
+  "name": "Odoo 18 Equipment Maintenance Presentation",
+  "description": "Interactive internship project presentation for the Odoo 18 Equipment Maintenance Management System developed at IT-Koncept SA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
