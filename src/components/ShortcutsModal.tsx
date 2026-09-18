@@ -10,14 +10,17 @@ export const ShortcutsModal: React.FC<{ isOpen: boolean; onClose: () => void }> 
   const shortcuts = [
     { key: 'Right Arrow / Down / Space', action: 'Next Slide' },
     { key: 'Left Arrow / Up / Shift+Space', action: 'Previous Slide' },
+    { key: 'B', action: 'Toggle Screen Blackout (Focus Mode)' },
+    { key: '1 / 2 / 3', action: 'Trigger Component Layer / Health Preset' },
+    { key: 'Shift + 1..9', action: 'Quick-Jump to Presentation Milestone' },
     { key: 'P', action: 'Toggle Presenter Notes & Teleprompter' },
     { key: 'G', action: 'Toggle Slide Grid Matrix' },
     { key: 'Q', action: 'Toggle Project Q&A Mode' },
-    { key: 'D', action: 'Open Internship Report, Speech & System Guide' },
+    { key: 'D', action: 'Open Internship Report & Dossier' },
     { key: 'S', action: 'Return to Clean Slide View' },
     { key: 'F', action: 'Toggle Fullscreen Mode' },
     { key: 'T', action: 'Start / Pause Presentation Timer' },
-    { key: 'Esc', action: 'Close Modal / Exit Special Views' }
+    { key: 'Esc', action: 'Close Modal / Exit Blackout / Return' }
   ];
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layers, Box, Cpu, Database, Share2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { LayerInfo } from '../../types';
 
@@ -68,6 +68,20 @@ const LAYERS: LayerInfo[] = [
 
 export const LayeredArchitecture: React.FC = () => {
   const [selectedLayer, setSelectedLayer] = useState<number>(1);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+      if (e.key === '1') setSelectedLayer(0);
+      else if (e.key === '2') setSelectedLayer(1);
+      else if (e.key === '3') setSelectedLayer(2);
+      else if (e.key === '4') setSelectedLayer(3);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
   const active = LAYERS[selectedLayer];
 
   return (

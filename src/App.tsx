@@ -104,6 +104,8 @@ export default function App() {
     return () => document.removeEventListener('fullscreenchange', handleFsChange);
   }, []);
 
+  const [isBlackout, setIsBlackout] = useState<boolean>(false);
+
   // Global Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -114,6 +116,10 @@ export default function App() {
       }
 
       if (e.key === 'Escape') {
+        if (isBlackout) {
+          setIsBlackout(false);
+          return;
+        }
         if (isShortcutsOpen) {
           setIsShortcutsOpen(false);
           return;
@@ -124,8 +130,35 @@ export default function App() {
         }
       }
 
+      if (e.key === 'b' || e.key === 'B') {
+        setIsBlackout((prev) => !prev);
+        return;
+      }
+
       if (e.key === '?' || (e.shiftKey && e.key === '/')) {
         setIsShortcutsOpen((prev) => !prev);
+        return;
+      }
+
+      // Section quick-jumps via Shift + Number
+      if (e.shiftKey && e.key >= '1' && e.key <= '9') {
+        e.preventDefault();
+        const sectionMap: Record<string, number> = {
+          '1': 0,  // Title
+          '2': 2,  // Problem
+          '3': 4,  // 4-Tier Architecture
+          '4': 5,  // ORM Entities
+          '5': 6,  // State Machine
+          '6': 7,  // Math Engine
+          '7': 9,  // AI Safety
+          '8': 14, // Testing & QA
+          '9': 17  // Conclusion
+        };
+        const targetIdx = sectionMap[e.key];
+        if (targetIdx !== undefined) {
+          setCurrentIndex(targetIdx);
+          setIsBlackout(false);
+        }
         return;
       }
 
@@ -134,14 +167,17 @@ export default function App() {
         case 'ArrowDown':
         case 'PageDown':
           e.preventDefault();
+          setIsBlackout(false);
           handleNext();
           break;
         case ' ':
           if (e.shiftKey) {
             e.preventDefault();
+            setIsBlackout(false);
             handlePrev();
           } else {
             e.preventDefault();
+            setIsBlackout(false);
             handleNext();
           }
           break;
@@ -149,6 +185,7 @@ export default function App() {
         case 'ArrowUp':
         case 'PageUp':
           e.preventDefault();
+          setIsBlackout(false);
           handlePrev();
           break;
         case 'p':
@@ -186,7 +223,7 @@ export default function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleNext, handlePrev, toggleFullscreen, toggleTimer, mode, isShortcutsOpen]);
+  }, [handleNext, handlePrev, toggleFullscreen, toggleTimer, mode, isShortcutsOpen, isBlackout]);
 
   const currentSlide = SLIDES[currentIndex];
   const nextSlide = currentIndex < SLIDES.length - 1 ? SLIDES[currentIndex + 1] : undefined;
@@ -300,6 +337,18 @@ export default function App() {
           onNext={handleNext}
           onSelectSlide={(idx) => setCurrentIndex(idx)}
         />
+      )}
+
+      {/* Fullscreen Blackout Overlay */}
+      {isBlackout && (
+        <div
+          onClick={() => setIsBlackout(false)}
+          className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center cursor-pointer select-none animate-fadeIn"
+        >
+          <div className="text-slate-600 font-mono text-xs uppercase tracking-widest bg-slate-950/80 px-4 py-2 rounded-full border border-slate-900">
+            Screen Blackout Active • Press <span className="text-slate-400 font-bold">B</span> or <span className="text-slate-400 font-bold">Esc</span> to resume
+          </div>
+        </div>
       )}
 
       {/* Keyboard Shortcuts Modal */}

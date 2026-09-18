@@ -77,6 +77,18 @@ export const HealthScoreCalculator: React.FC = () => {
     }
   };
 
+  React.useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+      if (e.key === '1') applyPreset('optimal');
+      else if (e.key === '2') applyPreset('warning');
+      else if (e.key === '3') applyPreset('critical');
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
   const StatusIcon = statusBadge.icon;
 
   return (
