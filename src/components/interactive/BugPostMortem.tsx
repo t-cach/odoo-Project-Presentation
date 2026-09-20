@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bug, Filter, AlertCircle, Wrench, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { BUGS_DATA } from '../../data/bugsData';
 
@@ -14,34 +14,81 @@ export const BugPostMortem: React.FC = () => {
 
   const activeBug = BUGS_DATA.find((b) => b.id === activeBugId) || BUGS_DATA[0];
 
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+
+      // Filter switching via 4 (Left) and 5 / 6 (Right)
+      if (e.key === '4') {
+        e.preventDefault();
+        const currentCatIdx = categories.indexOf(selectedCategory);
+        const prevCatIdx = currentCatIdx > 0 ? currentCatIdx - 1 : categories.length - 1;
+        const newCat = categories[prevCatIdx];
+        setSelectedCategory(newCat);
+        const first = newCat === 'All' ? BUGS_DATA[0] : BUGS_DATA.find((b) => b.category === newCat);
+        if (first) setActiveBugId(first.id);
+      } else if (e.key === '5' || e.key === '6') {
+        e.preventDefault();
+        const currentCatIdx = categories.indexOf(selectedCategory);
+        const nextCatIdx = currentCatIdx < categories.length - 1 ? currentCatIdx + 1 : 0;
+        const newCat = categories[nextCatIdx];
+        setSelectedCategory(newCat);
+        const first = newCat === 'All' ? BUGS_DATA[0] : BUGS_DATA.find((b) => b.category === newCat);
+        if (first) setActiveBugId(first.id);
+      }
+
+      // Bug navigation via 8 (Up) and 2 (Down)
+      if (e.key === '8') {
+        e.preventDefault();
+        const currentBugIdx = filteredBugs.findIndex((b) => b.id === activeBugId);
+        const prevBugIdx = currentBugIdx > 0 ? currentBugIdx - 1 : filteredBugs.length - 1;
+        if (filteredBugs[prevBugIdx]) setActiveBugId(filteredBugs[prevBugIdx].id);
+      } else if (e.key === '2') {
+        e.preventDefault();
+        const currentBugIdx = filteredBugs.findIndex((b) => b.id === activeBugId);
+        const nextBugIdx = currentBugIdx < filteredBugs.length - 1 ? currentBugIdx + 1 : 0;
+        if (filteredBugs[nextBugIdx]) setActiveBugId(filteredBugs[nextBugIdx].id);
+      }
+    };
+
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [selectedCategory, activeBugId, filteredBugs, categories]);
+
   return (
     <div className="w-full bg-white rounded-xl border-2 border-slate-200 p-5 shadow-sm">
-      {/* Category filter pills */}
-      <div className="flex flex-wrap items-center gap-1.5 pb-3 mb-4 border-b border-slate-100">
-        <div className="flex items-center gap-1 text-xs font-bold text-slate-500 mr-1">
-          <Filter className="w-3.5 h-3.5" />
-          Filter:
+      {/* Category filter pills & Hotkey Prompt */}
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-slate-100">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex items-center gap-1 text-xs font-bold text-slate-500 mr-1">
+            <Filter className="w-3.5 h-3.5" />
+            Filter:
+          </div>
+          {categories.map((cat) => {
+            const isSelected = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => {
+                  setSelectedCategory(cat);
+                  const first = cat === 'All' ? BUGS_DATA[0] : BUGS_DATA.find((b) => b.category === cat);
+                  if (first) setActiveBugId(first.id);
+                }}
+                className={`px-2.5 py-1 rounded-full text-xs font-bold transition-all ${
+                  isSelected
+                    ? 'bg-purple-800 text-white'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
         </div>
-        {categories.map((cat) => {
-          const isSelected = selectedCategory === cat;
-          return (
-            <button
-              key={cat}
-              onClick={() => {
-                setSelectedCategory(cat);
-                const first = cat === 'All' ? BUGS_DATA[0] : BUGS_DATA.find((b) => b.category === cat);
-                if (first) setActiveBugId(first.id);
-              }}
-              className={`px-2.5 py-1 rounded-full text-xs font-bold transition-all ${
-                isSelected
-                  ? 'bg-purple-800 text-white'
-                  : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
-              }`}
-            >
-              {cat}
-            </button>
-          );
-        })}
+        <div className="text-2xs font-mono font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">
+          Filters: <kbd className="text-purple-900 bg-white px-1 rounded">4</kbd> (Left) / <kbd className="text-purple-900 bg-white px-1 rounded">5</kbd> (Right) • Bugs: <kbd className="text-purple-900 bg-white px-1 rounded">8</kbd> (Up) / <kbd className="text-purple-900 bg-white px-1 rounded">2</kbd> (Down)
+        </div>
       </div>
 
       {/* Main split: List on left, details on right */}

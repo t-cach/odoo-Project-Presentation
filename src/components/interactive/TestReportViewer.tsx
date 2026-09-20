@@ -4,6 +4,19 @@ import { CheckCircle, AlertTriangle, Shield, Terminal, PlayCircle, Video, FileCh
 export const TestReportViewer: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'summary' | 'suites' | 'live_api' | 'demo_steps'>('summary');
 
+  React.useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+      if (e.key === '1') setActiveTab('summary');
+      else if (e.key === '2') setActiveTab('suites');
+      else if (e.key === '3') setActiveTab('live_api');
+      else if (e.key === '4') setActiveTab('demo_steps');
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
   const demoSteps = [
     { step: 1, action: 'User authentication & session token exchange', outcome: 'Admin logged into Odoo 18 Community' },
     { step: 2, action: 'Executive KPI dashboard load', outcome: '30 live plant metrics aggregated without delay' },

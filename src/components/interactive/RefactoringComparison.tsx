@@ -111,6 +111,19 @@ export const RefactoringComparison: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('kanban');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
+  React.useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+      if (e.key === '1') setActiveTab('kanban');
+      else if (e.key === '2') setActiveTab('stock');
+      else if (e.key === '3') setActiveTab('views');
+      else if (e.key === '4') setActiveTab('orm');
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
   const current = REFACTOR_ITEMS[activeTab];
 
   const handleCopy = (text: string, key: string) => {
