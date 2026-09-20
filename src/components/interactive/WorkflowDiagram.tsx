@@ -67,6 +67,19 @@ export const WorkflowDiagram: React.FC = () => {
   const [packetPos, setPacketPos] = useState<number>(0);
 
   useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+      if (e.key === '1') setActiveStep(0);
+      else if (e.key === '2') setActiveStep(1);
+      else if (e.key === '3') setActiveStep(2);
+      else if (e.key === '4') setActiveStep(3);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
+  useEffect(() => {
     if (!isPlaying) return;
     const interval = setInterval(() => {
       setPacketPos((p) => (p + 1) % 100);

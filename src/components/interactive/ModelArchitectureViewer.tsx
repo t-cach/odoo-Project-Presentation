@@ -1,9 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Database, FileCode, Table2, Key, Link2 } from 'lucide-react';
 import { CORE_MODELS_DATA } from '../../data/slidesData';
 
 export const ModelArchitectureViewer: React.FC = () => {
   const [selectedModel, setSelectedModel] = useState<string>(CORE_MODELS_DATA[0].name);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+      
+      const currentIdx = CORE_MODELS_DATA.findIndex((m) => m.name === selectedModel);
+      if (e.key === '8') {
+        e.preventDefault();
+        const prevIdx = currentIdx > 0 ? currentIdx - 1 : CORE_MODELS_DATA.length - 1;
+        setSelectedModel(CORE_MODELS_DATA[prevIdx].name);
+      } else if (e.key === '2') {
+        e.preventDefault();
+        const nextIdx = currentIdx < CORE_MODELS_DATA.length - 1 ? currentIdx + 1 : 0;
+        setSelectedModel(CORE_MODELS_DATA[nextIdx].name);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [selectedModel]);
 
   const activeModel = CORE_MODELS_DATA.find((m) => m.name === selectedModel) || CORE_MODELS_DATA[0];
 
@@ -19,9 +39,14 @@ export const ModelArchitectureViewer: React.FC = () => {
             Relational Entities & Computed Schema Inspector
           </h4>
         </div>
-        <span className="text-xs font-bold text-purple-900 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200 font-mono">
-          Total LOC: ~2,380 Core ORM Lines
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200 font-mono">
+            Press <kbd className="text-purple-900 font-extrabold bg-white px-1 py-0.5 rounded border border-slate-300">8</kbd> (Up) / <kbd className="text-purple-900 font-extrabold bg-white px-1 py-0.5 rounded border border-slate-300">2</kbd> (Down)
+          </span>
+          <span className="text-xs font-bold text-purple-900 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200 font-mono">
+            Total LOC: ~2,380 Core ORM Lines
+          </span>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">

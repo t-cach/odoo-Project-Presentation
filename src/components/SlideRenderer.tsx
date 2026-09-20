@@ -46,7 +46,7 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide, onNavigateT
     // SLIDE 1: Title & Academic Identity
     case 1:
       return (
-        <div className="w-full mx-auto my-auto py-4 sm:py-6 space-y-6 sm:space-y-8">
+        <div className="w-full mx-auto my-0 pt-1 pb-4 space-y-4 sm:space-y-5">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-purple-100 text-purple-900 border border-purple-200 rounded-full text-xs sm:text-sm font-black uppercase tracking-wider shadow-2xs">
             <GraduationCap className="w-4 h-4 text-purple-800" />
             Software Engineering Internship Project
@@ -133,7 +133,7 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide, onNavigateT
     // SLIDE 2: Company Presentation - IT-Koncept SA
     case 2:
       return (
-        <div className="w-full mx-auto my-auto space-y-6">
+        <div className="w-full mx-auto my-0 pt-1 pb-4 space-y-5">
           <div className="bg-white border-2 border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200">
               <div>
