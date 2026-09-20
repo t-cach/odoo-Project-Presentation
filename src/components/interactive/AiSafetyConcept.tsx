@@ -70,9 +70,6 @@ export const AiSafetyConcept: React.FC = () => {
               {s.label}
             </button>
           ))}
-          <span className="text-2xs font-mono font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200 ml-1">
-            Keys <kbd className="text-purple-900 font-extrabold bg-white px-1 rounded">1</kbd> <kbd className="text-purple-900 font-extrabold bg-white px-1 rounded">2</kbd> <kbd className="text-purple-900 font-extrabold bg-white px-1 rounded">3</kbd>
-          </span>
         </div>
       </div>
 

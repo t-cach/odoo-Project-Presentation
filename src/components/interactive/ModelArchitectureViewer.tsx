@@ -39,14 +39,9 @@ export const ModelArchitectureViewer: React.FC = () => {
             Relational Entities & Computed Schema Inspector
           </h4>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200 font-mono">
-            Press <kbd className="text-purple-900 font-extrabold bg-white px-1 py-0.5 rounded border border-slate-300">8</kbd> (Up) / <kbd className="text-purple-900 font-extrabold bg-white px-1 py-0.5 rounded border border-slate-300">2</kbd> (Down)
-          </span>
-          <span className="text-xs font-bold text-purple-900 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200 font-mono">
-            Total LOC: ~2,380 Core ORM Lines
-          </span>
-        </div>
+        <span className="text-xs font-bold text-purple-900 bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200 font-mono">
+          Total LOC: ~2,380 Core ORM Lines
+        </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">

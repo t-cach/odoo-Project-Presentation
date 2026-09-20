@@ -79,29 +79,24 @@ export const DefenseQA: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         </div>
 
         {/* Filter categories */}
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex flex-wrap gap-1.5">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  setSelectedCat(cat);
-                  const first = cat === 'All' ? DEFENSE_QA[0] : DEFENSE_QA.find((q) => q.category === cat);
-                  if (first) setActiveQuestionId(first.id);
-                }}
-                className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                  selectedCat === cat
-                    ? 'bg-teal-500 text-slate-950 font-black'
-                    : 'bg-slate-800 text-slate-300 hover:bg-slate-750'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-          <div className="text-2xs font-mono font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700">
-            Filters: <kbd className="text-teal-300 font-extrabold bg-slate-900 px-1 py-0.5 rounded">4</kbd> (Left) / <kbd className="text-teal-300 font-extrabold bg-slate-900 px-1 py-0.5 rounded">6</kbd> (Right) • Questions: <kbd className="text-teal-300 font-extrabold bg-slate-900 px-1 py-0.5 rounded">8</kbd> (Up) / <kbd className="text-teal-300 font-extrabold bg-slate-900 px-1 py-0.5 rounded">2</kbd> (Down)
-          </div>
+        <div className="flex flex-wrap items-center gap-1.5">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => {
+                setSelectedCat(cat);
+                const first = cat === 'All' ? DEFENSE_QA[0] : DEFENSE_QA.find((q) => q.category === cat);
+                if (first) setActiveQuestionId(first.id);
+              }}
+              className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
+                selectedCat === cat
+                  ? 'bg-teal-500 text-slate-950 font-black'
+                  : 'bg-slate-800 text-slate-300 hover:bg-slate-750'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
         </div>
 
         {/* Question Split */}

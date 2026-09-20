@@ -58,9 +58,8 @@ export const BugPostMortem: React.FC = () => {
 
   return (
     <div className="w-full bg-white rounded-xl border-2 border-slate-200 p-5 shadow-sm">
-      {/* Category filter pills & Hotkey Prompt */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-slate-100">
-        <div className="flex flex-wrap items-center gap-1.5">
+        {/* Category filter pills */}
+        <div className="flex flex-wrap items-center gap-1.5 pb-3 mb-4 border-b border-slate-100">
           <div className="flex items-center gap-1 text-xs font-bold text-slate-500 mr-1">
             <Filter className="w-3.5 h-3.5" />
             Filter:
@@ -86,10 +85,6 @@ export const BugPostMortem: React.FC = () => {
             );
           })}
         </div>
-        <div className="text-2xs font-mono font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded border border-slate-200">
-          Filters: <kbd className="text-purple-900 bg-white px-1 rounded">4</kbd> (Left) / <kbd className="text-purple-900 bg-white px-1 rounded">5</kbd> (Right) • Bugs: <kbd className="text-purple-900 bg-white px-1 rounded">8</kbd> (Up) / <kbd className="text-purple-900 bg-white px-1 rounded">2</kbd> (Down)
-        </div>
-      </div>
 
       {/* Main split: List on left, details on right */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BookOpen,
   Search,
@@ -18,6 +18,30 @@ export const DossierViewer: React.FC<DossierViewerProps> = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'report' | 'speech' | 'essentials' | 'testing'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
+
+  const tabs: ('all' | 'report' | 'speech' | 'essentials' | 'testing')[] = ['all', 'report', 'speech', 'essentials', 'testing'];
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+
+      if (e.key === '4') {
+        e.preventDefault();
+        const currentIdx = tabs.indexOf(activeTab);
+        const prevIdx = currentIdx > 0 ? currentIdx - 1 : tabs.length - 1;
+        setActiveTab(tabs[prevIdx]);
+      } else if (e.key === '6' || e.key === '5') {
+        e.preventDefault();
+        const currentIdx = tabs.indexOf(activeTab);
+        const nextIdx = currentIdx < tabs.length - 1 ? currentIdx + 1 : 0;
+        setActiveTab(tabs[nextIdx]);
+      }
+    };
+
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [activeTab, tabs]);
 
   const handleCopy = (text: string, sectionKey: string) => {
     navigator.clipboard.writeText(text);
