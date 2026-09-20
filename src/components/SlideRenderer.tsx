@@ -133,66 +133,66 @@ export const SlideRenderer: React.FC<SlideRendererProps> = ({ slide, onNavigateT
     // SLIDE 2: Company Presentation - IT-Koncept SA
     case 2:
       return (
-        <div className="w-full mx-auto my-0 pt-1 pb-4 space-y-5">
-          <div className="bg-white border-2 border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-200">
+        <div className="w-full mx-auto my-0 pt-1 pb-2 space-y-4">
+          <div className="bg-white border-2 border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200">
               <div>
                 <span className="text-xs sm:text-sm font-black text-purple-800 uppercase tracking-wider">
                   Host Enterprise Profile & Industrial Ecosystem
                 </span>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 mt-1">
+                <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-0.5">
                   IT-Koncept SA — Swiss Digital Engineering & Odoo Partner
                 </h2>
               </div>
-              <span className="text-xs sm:text-sm font-extrabold text-teal-800 bg-teal-50 px-3.5 py-1.5 rounded-full border border-teal-200 shadow-2xs">
+              <span className="text-xs font-extrabold text-teal-800 bg-teal-50 px-3 py-1 rounded-full border border-teal-200 shadow-2xs">
                 Founded in 2013 (10+ Years Innovation)
               </span>
             </div>
 
-            <p className="text-base sm:text-lg text-slate-700 leading-relaxed max-w-6xl">
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed max-w-6xl">
               IT-Koncept SA is an established Swiss digital engineering company and certified Odoo Integration Partner, operating across dual engineering hubs in Nyon (Vaud, Switzerland) and Tunis (Tunisia). With over 8 years of certified Odoo engineering experience across versions 7 through 18, the company designs, develops, and deploys high-availability ERP architectures, custom modules, and workflow automations for industrial enterprises and SMEs across Switzerland and North Africa.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
-              <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <Building2 className="w-5 h-5 text-purple-800" />
-                  <span className="text-xs sm:text-sm font-black uppercase text-purple-800 tracking-wide">Swiss Headquarters</span>
+                  <Building2 className="w-4 h-4 text-purple-800" />
+                  <span className="text-xs font-black uppercase text-purple-800 tracking-wide">Swiss Headquarters</span>
                 </div>
-                <div className="text-base sm:text-lg font-bold text-slate-900">Nyon, Canton of Vaud</div>
-                <div className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <div className="text-sm sm:text-base font-bold text-slate-900">Nyon, Canton of Vaud</div>
+                <div className="text-xs text-slate-600 leading-relaxed">
                   Strategic governance, client partnership, enterprise IT consulting, and Swiss cloud infrastructure.
                 </div>
               </div>
 
-              <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <Cpu className="w-5 h-5 text-teal-800" />
-                  <span className="text-xs sm:text-sm font-black uppercase text-teal-800 tracking-wide">Engineering Hub</span>
+                  <Cpu className="w-4 h-4 text-teal-800" />
+                  <span className="text-xs font-black uppercase text-teal-800 tracking-wide">Engineering Hub</span>
                 </div>
-                <div className="text-base sm:text-lg font-bold text-slate-900">IT-Koncept Tunisia, Tunis</div>
-                <div className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <div className="text-sm sm:text-base font-bold text-slate-900">IT-Koncept Tunisia, Tunis</div>
+                <div className="text-xs text-slate-600 leading-relaxed">
                   Center of excellence dedicated to Python/Odoo ORM development, custom module engineering, and rigorous QA.
                 </div>
               </div>
 
-              <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <Award className="w-5 h-5 text-emerald-700" />
-                  <span className="text-xs sm:text-sm font-black uppercase text-emerald-800 tracking-wide">Odoo Ecosystem</span>
+                  <Award className="w-4 h-4 text-emerald-700" />
+                  <span className="text-xs font-black uppercase text-emerald-800 tracking-wide">Odoo Ecosystem</span>
                 </div>
-                <div className="text-base sm:text-lg font-bold text-slate-900">8+ Years Official Partner</div>
-                <div className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <div className="text-sm sm:text-base font-bold text-slate-900">8+ Years Official Partner</div>
+                <div className="text-xs text-slate-600 leading-relaxed">
                   Deep technical expertise spanning Odoo versions 7 to 18 Community and Enterprise, delivering tailor-made industrial vertical extensions.
                 </div>
               </div>
             </div>
 
-            <div className="bg-slate-900 text-slate-100 rounded-2xl p-4 sm:p-5 text-sm sm:text-base flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+            <div className="bg-slate-900 text-slate-100 rounded-xl p-3 sm:p-4 text-xs sm:text-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 shadow-sm">
               <span className="font-semibold text-slate-200 italic">
                 "Combining innovation, technical quality, and digital reliability to build the future with our partners."
               </span>
-              <span className="text-xs font-mono font-bold text-purple-300 shrink-0 bg-slate-800 px-2.5 py-1 rounded border border-slate-700">
+              <span className="text-xs font-mono font-bold text-purple-300 shrink-0 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">
                 Corporate Mission Statement
               </span>
             </div>
