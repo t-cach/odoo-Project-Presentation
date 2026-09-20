@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DEFENSE_QA } from '../data/qaData';
 import { HelpCircle, ChevronRight, CheckCircle2, FileCode, Tag, MessageSquare } from 'lucide-react';
 
@@ -13,6 +13,48 @@ export const DefenseQA: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     : DEFENSE_QA.filter((q) => q.category === selectedCat);
 
   const activeQuestion = DEFENSE_QA.find((q) => q.id === activeQuestionId) || DEFENSE_QA[0];
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+
+      // Filter switching via 4 (Left) and 6 / 5 (Right)
+      if (e.key === '4') {
+        e.preventDefault();
+        const currentCatIdx = categories.indexOf(selectedCat);
+        const prevCatIdx = currentCatIdx > 0 ? currentCatIdx - 1 : categories.length - 1;
+        const newCat = categories[prevCatIdx];
+        setSelectedCat(newCat);
+        const first = newCat === 'All' ? DEFENSE_QA[0] : DEFENSE_QA.find((q) => q.category === newCat);
+        if (first) setActiveQuestionId(first.id);
+      } else if (e.key === '6' || e.key === '5') {
+        e.preventDefault();
+        const currentCatIdx = categories.indexOf(selectedCat);
+        const nextCatIdx = currentCatIdx < categories.length - 1 ? currentCatIdx + 1 : 0;
+        const newCat = categories[nextCatIdx];
+        setSelectedCat(newCat);
+        const first = newCat === 'All' ? DEFENSE_QA[0] : DEFENSE_QA.find((q) => q.category === newCat);
+        if (first) setActiveQuestionId(first.id);
+      }
+
+      // Question navigation via 8 (Up) and 2 (Down)
+      if (e.key === '8') {
+        e.preventDefault();
+        const currentQIdx = filtered.findIndex((q) => q.id === activeQuestionId);
+        const prevQIdx = currentQIdx > 0 ? currentQIdx - 1 : filtered.length - 1;
+        if (filtered[prevQIdx]) setActiveQuestionId(filtered[prevQIdx].id);
+      } else if (e.key === '2') {
+        e.preventDefault();
+        const currentQIdx = filtered.findIndex((q) => q.id === activeQuestionId);
+        const nextQIdx = currentQIdx < filtered.length - 1 ? currentQIdx + 1 : 0;
+        if (filtered[nextQIdx]) setActiveQuestionId(filtered[nextQIdx].id);
+      }
+    };
+
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [selectedCat, activeQuestionId, filtered, categories]);
 
   return (
     <div className="w-full h-full bg-slate-900 text-slate-100 p-5 overflow-y-auto custom-scrollbar">
@@ -37,24 +79,29 @@ export const DefenseQA: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         </div>
 
         {/* Filter categories */}
-        <div className="flex flex-wrap gap-1.5">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => {
-                setSelectedCat(cat);
-                const first = cat === 'All' ? DEFENSE_QA[0] : DEFENSE_QA.find((q) => q.category === cat);
-                if (first) setActiveQuestionId(first.id);
-              }}
-              className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                selectedCat === cat
-                  ? 'bg-teal-500 text-slate-950 font-black'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-750'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap gap-1.5">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => {
+                  setSelectedCat(cat);
+                  const first = cat === 'All' ? DEFENSE_QA[0] : DEFENSE_QA.find((q) => q.category === cat);
+                  if (first) setActiveQuestionId(first.id);
+                }}
+                className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
+                  selectedCat === cat
+                    ? 'bg-teal-500 text-slate-950 font-black'
+                    : 'bg-slate-800 text-slate-300 hover:bg-slate-750'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <div className="text-2xs font-mono font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700">
+            Filters: <kbd className="text-teal-300 font-extrabold bg-slate-900 px-1 py-0.5 rounded">4</kbd> (Left) / <kbd className="text-teal-300 font-extrabold bg-slate-900 px-1 py-0.5 rounded">6</kbd> (Right) • Questions: <kbd className="text-teal-300 font-extrabold bg-slate-900 px-1 py-0.5 rounded">8</kbd> (Up) / <kbd className="text-teal-300 font-extrabold bg-slate-900 px-1 py-0.5 rounded">2</kbd> (Down)
+          </div>
         </div>
 
         {/* Question Split */}
